@@ -138,5 +138,44 @@ clearAll.addEventListener('click', ()=>{
 
 // Copy button Function 
 
+document.addEventListener('DOMContentLoaded', ()=>{
+    // get all copy icon 
 
+    const copyIcons = document.querySelectorAll('.copy');
+
+    // get copy count btn 
+
+    const copyCount = document.getElementById('copy-count');
+
+
+    let totalCopyCount = 0;
+
+    copyIcons.forEach(copyIcon=>{
+
+        copyIcon.addEventListener('click', ()=>{
+            const isCopied = copyIcon.classList.contains('bg-gray-200');
+
+            if(!isCopied){
+                
+                const card = copyIcon.closest('.card-container');
+                const number = card.querySelector('.contact-number')?.textContent?.trim();
+
+                navigator.clipboard.writeText(number).catch(err => {
+               console.error("Failed to copy:", err);
+               });
+
+                if(number){
+                    alert(`Number is Copied: ${number}`);
+                }
+
+                copyIcon.classList.remove('bg-[#ffffff]');
+                copyIcon.classList.add('bg-gray-200');
+                totalCopyCount++;
+                 copyCount.textContent = `${totalCopyCount} Copy`;
+            }
+           
+        })
+
+    })
+})
 
